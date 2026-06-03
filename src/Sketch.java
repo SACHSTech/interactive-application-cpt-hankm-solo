@@ -14,7 +14,8 @@ public class Sketch extends PApplet {
         size(800, 800); 
     }
 
-    int barX = 325;
+    int bottomBarX = 325;
+    int topBarX = 325;
     int barWidth = 150;
 
     @Override
@@ -28,22 +29,40 @@ public class Sketch extends PApplet {
         
         if(keyPressed) {
             if(keyCode == LEFT) {
-                if(barX > 0) {
-                    barX -= 5;
+                if(bottomBarX > 0) {
+                    bottomBarX -= 5;
                 }
             } else if (keyCode == RIGHT){
-                if(barX < width - barWidth) {
-                    barX += 5;
+                if(bottomBarX < width - barWidth) {
+                    bottomBarX += 5;
+                }
+            }
+        }
+        drawBottomBar(bottomBarX);
+
+        if(keyPressed) {
+            if(key == 'a') {
+                if(topBarX > 0) {
+                    topBarX -= 5;
+                }
+            } else if (key == 'd'){
+                if(topBarX < width - barWidth) {
+                    topBarX += 5;
                 }
             }
         }
 
-        drawBar(barX);
+        drawTopBar(topBarX);
     }
 
-    private void drawBar(int x){
+    private void drawBottomBar(int x){
         fill(255);
         rect(x, 700, 150, 20, 10);
+    }
+
+    private void drawTopBar(int y) {
+        fill(255);
+        rect(y, 100, 150, 20, 10);
     }
 
     /** Additional helper methods below */
