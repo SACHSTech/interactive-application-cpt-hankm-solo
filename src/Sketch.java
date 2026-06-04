@@ -2,7 +2,7 @@ import processing.core.PApplet;
 
 /**
  * Template for programs with Processing graphics output.
- * @author Your Name
+ * @author Hank Ma
  */
 public class Sketch extends PApplet {
     public static void main(String[] args) {
@@ -18,6 +18,11 @@ public class Sketch extends PApplet {
     int topBarX = 325;
     int barWidth = 150;
 
+    boolean user1PressedLeft = false;
+    boolean user1PressedRight = false;
+    boolean user2PressedLeft = false;
+    boolean user2PressedRight = false;
+
     @Override
     public void setup() {
         
@@ -27,32 +32,70 @@ public class Sketch extends PApplet {
     public void draw() {
         background (300, 200, 100);
         
-        if(keyPressed) {
-            if(keyCode == LEFT) {
-                if(bottomBarX > 0) {
-                    bottomBarX -= 5;
-                }
-            } else if (keyCode == RIGHT){
-                if(bottomBarX < width - barWidth) {
-                    bottomBarX += 5;
-                }
+        if(user1PressedLeft) {
+            if(bottomBarX > 0) {
+                bottomBarX -= 10;
+            }
+        } 
+        if (user1PressedRight){
+            if(bottomBarX < width - barWidth) {
+                bottomBarX += 10;
             }
         }
-        drawBottomBar(bottomBarX);
 
-        if(keyPressed) {
-            if(key == 'a') {
-                if(topBarX > 0) {
-                    topBarX -= 5;
-                }
-            } else if (key == 'd'){
-                if(topBarX < width - barWidth) {
-                    topBarX += 5;
-                }
+        if(user2PressedLeft) {
+            if(topBarX > 0) {
+                topBarX -= 10;
+            }
+        } 
+        if (user2PressedRight){
+            if(topBarX < width - barWidth) {
+                topBarX += 10;
             }
         }
+
+        
+       
+       drawBottomBar(bottomBarX);
 
         drawTopBar(topBarX);
+
+        drawDottedLine();
+    }
+
+    private void drawDottedLine(){
+        int i = 0;
+        int j = 0;
+        fill(0);
+        while(i <= width){
+            rect(j * 65, 397, 50, 6);
+            j++;
+            i += 50;
+        }
+    }
+
+    public void keyPressed(){
+        if (keyCode == LEFT) {
+            user1PressedLeft = true;
+        } else if (keyCode == RIGHT) {
+            user1PressedRight = true;
+        } else if (key == 'a'){
+            user2PressedLeft = true;
+        } else if (key == 'd') {
+            user2PressedRight = true;
+        }
+    }
+
+    public void keyReleased(){
+        if (keyCode == LEFT) {
+            user1PressedLeft = false;
+        } else if (keyCode == RIGHT) {
+            user1PressedRight = false;
+        } else if (key == 'a'){
+            user2PressedLeft = false;
+        } else if (key == 'd') {
+            user2PressedRight = false;
+        }
     }
 
     private void drawBottomBar(int x){
