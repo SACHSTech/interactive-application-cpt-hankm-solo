@@ -17,6 +17,13 @@ public class Sketch extends PApplet {
     int bottomBarX = 325;
     int topBarX = 325;
     int barWidth = 150;
+    int barHeight = 20;
+
+    // Ball variables
+    float ballX = 400;
+    float ballY = 400;
+    float ballSpeed = 10;
+    int ballSize = 20;
 
     boolean user1PressedLeft = false;
     boolean user1PressedRight = false;
@@ -25,11 +32,12 @@ public class Sketch extends PApplet {
 
     @Override
     public void setup() {
-        
+       frameRate(1); 
     }
 
     @Override
     public void draw() {
+
         background (300, 200, 100);
         
         if(user1PressedLeft) {
@@ -53,14 +61,24 @@ public class Sketch extends PApplet {
                 topBarX += 10;
             }
         }
-
         
-       
-       drawBottomBar(bottomBarX);
+        ballX -= ballSpeed;
+        ballY -= ballSpeed;
 
+        if(ballX + ballSize / 2 <= topBarX + barWidth && ballX - ballSize / 2 >= topBarX && ballY - ballSize / 2 >= 100 + barHeight && ballY + ballSize / 2 <= 100 + barHeight + ballSize){
+            ballY = 100 + barHeight + ballSize / 2;
+            ballSpeed *= -1;
+        }
+
+        drawBottomBar(bottomBarX);
         drawTopBar(topBarX);
-
         drawDottedLine();
+        drawBall();
+    }
+
+    private void drawBall(){
+        fill(255);
+        circle(ballX, ballY, ballSize);
     }
 
     private void drawDottedLine(){
@@ -68,7 +86,7 @@ public class Sketch extends PApplet {
         int j = 0;
         fill(0);
         while(i <= width){
-            rect(j * 65, 397, 50, 6);
+            rect((j * 65) - 15, 397, 50, 6);
             j++;
             i += 50;
         }
@@ -99,13 +117,13 @@ public class Sketch extends PApplet {
     }
 
     private void drawBottomBar(int x){
-        fill(255);
+        fill(0, 0, 255);
         rect(x, 700, 150, 20, 10);
     }
 
-    private void drawTopBar(int y) {
-        fill(255);
-        rect(y, 100, 150, 20, 10);
+    private void drawTopBar(int x) {
+        fill(255, 0, 0);
+        rect(x, 100, 150, 20, 10);
     }
 
     /** Additional helper methods below */
