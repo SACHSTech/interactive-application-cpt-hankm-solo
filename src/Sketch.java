@@ -77,7 +77,7 @@ public class Sketch extends PApplet {
 
         if(ballX + ballSize / 2 <= bottomBarX + barWidth 
         && ballX - ballSize / 2 >= bottomBarX 
-        && ballY - ballSize / 2 >= 700 + ballSize 
+        && ballY - ballSize / 2 >= 700 - ballSize 
         && ballY + ballSize / 2 <= 700 
         ){
             ballY = 700 - ballSize / 2;
