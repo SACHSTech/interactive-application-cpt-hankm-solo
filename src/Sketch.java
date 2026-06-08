@@ -22,7 +22,8 @@ public class Sketch extends PApplet {
     // Ball variables
     float ballX = 400;
     float ballY = 400;
-    float ballSpeed = 10;
+    float ballSpeedX = 10;
+    float ballSpeedY = 10;
     int ballSize = 20;
 
     boolean user1PressedLeft = false;
@@ -32,7 +33,7 @@ public class Sketch extends PApplet {
 
     @Override
     public void setup() {
-       frameRate(1); 
+       frameRate(5); 
     }
 
     @Override
@@ -62,12 +63,25 @@ public class Sketch extends PApplet {
             }
         }
         
-        ballX -= ballSpeed;
-        ballY -= ballSpeed;
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
 
-        if(ballX + ballSize / 2 <= topBarX + barWidth && ballX - ballSize / 2 >= topBarX && ballY - ballSize / 2 >= 100 + barHeight && ballY + ballSize / 2 <= 100 + barHeight + ballSize){
+        if(ballX + ballSize / 2 <= topBarX + barWidth 
+        && ballX - ballSize / 2 >= topBarX 
+        && ballY - ballSize / 2 >= 100 + barHeight 
+        && ballY + ballSize / 2 <= 100 + barHeight + ballSize
+        ){
             ballY = 100 + barHeight + ballSize / 2;
-            ballSpeed *= -1;
+            ballSpeedY *= -1;
+        }
+
+        if(ballX + ballSize / 2 <= bottomBarX + barWidth 
+        && ballX - ballSize / 2 >= bottomBarX 
+        && ballY - ballSize / 2 >= 700 + ballSize 
+        && ballY + ballSize / 2 <= 700 
+        ){
+            ballY = 700 - ballSize / 2;
+            ballSpeedY *= -1;
         }
 
         drawBottomBar(bottomBarX);
