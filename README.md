@@ -2,7 +2,7 @@
 # ICS3U CPT – Interactive Processing Project
 
 ## Screenshot
-![Game Screenshot](images/Pong Game Screenshot.jpg)
+![Game Screenshot](images/Pong%20Game%20Screenshot.jpg)
 
 ## Description
 A two player pong game built in Processing. Both players control a paddle and try to get the ball past the opponent's side. The first player to score 3 points wins the match. 
