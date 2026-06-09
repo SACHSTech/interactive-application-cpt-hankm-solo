@@ -22,8 +22,8 @@ public class Sketch extends PApplet {
     // Ball variables
     float ballX = 400;
     float ballY = 400;
-    float ballSpeedX = 10;
-    float ballSpeedY = 10;
+    float ballSpeedX = 5;
+    float ballSpeedY = 5;
     int ballSize = 20;
 
     boolean user1PressedLeft = false;
@@ -31,9 +31,15 @@ public class Sketch extends PApplet {
     boolean user2PressedLeft = false;
     boolean user2PressedRight = false;
 
+    // Array to keep track of each player's score
+    // scores[0] is the blue player, socres[1] is the red player
+    int[] scores = new int[2];
+
+    String[] playerNames = {"Blue", "Red"};
+
     @Override
     public void setup() {
-       frameRate(5); 
+    //    frameRate(5); 
     }
 
     @Override
@@ -66,12 +72,47 @@ public class Sketch extends PApplet {
         ballX += ballSpeedX;
         ballY += ballSpeedY;
 
+        if(ballX - ballSize / 2 <= 0){
+            // ballX = ballSize / 2;
+            ballSpeedX *= -1;
+        }
+
+        if(ballX + ballSize / 2 >= 800){
+            // ballX = width - ballSize / 2;
+            ballSpeedX *= -1;
+        }
+
+        if(ballY - ballSize / 2 <= 0){
+            scores[0]++;
+            for(int i = 0; i < scores.length; i++){
+                if(scores[i] >= 3){
+                    fill(0, 0, 255);
+                    textSize(40);
+                    text(playerNames[i] + " WINS", width / 2 - 70, height - 700);
+                    noLoop();
+                    
+                }
+            }
+        }
+
+        if(ballY + ballSize / 2 >= 800){
+            scores[1]++;
+            for(int i = 0; i < scores.length; i++){
+                if(scores[i] >= 3){
+                    fill(255, 0, 0);
+                    textSize(40);
+                    text(playerNames[i] + " WINS", width / 2 - 70, height - 700);
+                    noLoop();
+                }
+            }
+        }
+        
         if(ballX + ballSize / 2 <= topBarX + barWidth 
         && ballX - ballSize / 2 >= topBarX 
         && ballY - ballSize / 2 >= 100 + barHeight 
         && ballY + ballSize / 2 <= 100 + barHeight + ballSize
         ){
-            ballY = 100 + barHeight + ballSize / 2;
+            // ballY = 100 + barHeight + ballSize / 2;
             ballSpeedY *= -1;
         }
 
@@ -80,7 +121,7 @@ public class Sketch extends PApplet {
         && ballY - ballSize / 2 >= 700 - ballSize 
         && ballY + ballSize / 2 <= 700 
         ){
-            ballY = 700 - ballSize / 2;
+            // ballY = 700 - ballSize / 2;
             ballSpeedY *= -1;
         }
 
@@ -88,6 +129,19 @@ public class Sketch extends PApplet {
         drawTopBar(topBarX);
         drawDottedLine();
         drawBall();
+        drawScores();
+    }
+
+    private void drawScores(){
+        textSize(30);
+
+        // Blue player score on the bottom half
+        fill(0, 0, 255);
+        text("Blue: " + scores[0], 10, 500);
+
+        // Red player score om the top half
+        fill(255, 0, 0);
+        text("Red: " + scores[1], 10, 300);
     }
 
     private void drawBall(){
