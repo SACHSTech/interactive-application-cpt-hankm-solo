@@ -18,7 +18,7 @@ The current score for both players is displayed on screen at all times.
 - Press 'A' to move left
 - Press 'D' to move right
 
-A Point is scored when the ball passes the opponent's edge. After each point the ball resets to the center. The first player to reach 3 points wins.
+A point is scored when the ball passes the opponent's edge. After each point the ball resets to the center. The first player to reach 3 points wins.
 
 ## Known Limitations
 - The ball always starts moving at the same speed and does not get faster over time
