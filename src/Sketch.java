@@ -1,7 +1,10 @@
 import processing.core.PApplet;
 
 /**
- * Template for programs with Processing graphics output.
+ * A two player pong game where the first player to score 3 points wins.
+ * Player 1 is blue and plays on the bottom, Player 2 is red and plays on the top.
+ * Player 1 control: LEFT and RIGHT arrow keys
+ * Player 2 control: A and D keys
  * @author Hank Ma
  */
 public class Sketch extends PApplet {
@@ -14,6 +17,7 @@ public class Sketch extends PApplet {
         size(800, 800); 
     }
 
+    // Paddle variables
     int bottomBarX = 325;
     int topBarX = 325;
     int barWidth = 150;
@@ -26,20 +30,19 @@ public class Sketch extends PApplet {
     float ballSpeedY = 5;
     int ballSize = 20;
 
+    // Keyboard Input
     boolean user1PressedLeft = false;
     boolean user1PressedRight = false;
     boolean user2PressedLeft = false;
     boolean user2PressedRight = false;
 
     // Array to keep track of each player's score
-    // scores[0] is the blue player, socres[1] is the red player
+    // scores[0] is the blue player, scroes[1] is the red player
     int[] scores = new int[2];
-
-    String[] playerNames = {"Blue", "Red"};
 
     @Override
     public void setup() {
-    //    frameRate(5); 
+
     }
 
     @Override
@@ -47,6 +50,7 @@ public class Sketch extends PApplet {
 
         background (300, 200, 100);
         
+        // Move paddles baed on keys being held
         if(user1PressedLeft) {
             if(bottomBarX > 0) {
                 bottomBarX -= 10;
@@ -69,59 +73,61 @@ public class Sketch extends PApplet {
             }
         }
         
+        // Move the ball
         ballX += ballSpeedX;
         ballY += ballSpeedY;
 
+        // Bounce off the left wall
         if(ballX - ballSize / 2 <= 0){
-            // ballX = ballSize / 2;
             ballSpeedX *= -1;
         }
 
+        // Bounce off the right wall
         if(ballX + ballSize / 2 >= 800){
-            // ballX = width - ballSize / 2;
             ballSpeedX *= -1;
         }
 
+        // Balll passed the top edge
         if(ballY - ballSize / 2 <= 0){
             scores[0]++;
-            for(int i = 0; i < scores.length; i++){
-                if(scores[i] >= 3){
-                    fill(0, 0, 255);
-                    textSize(40);
-                    text(playerNames[i] + " WINS", width / 2 - 70, height - 700);
-                    noLoop();
-                    
-                }
+            if(scores[0] == 3){
+                fill(0, 0, 255);
+                textSize(40);
+                text("BLUE WINS", width / 2 - 70, height - 700);
+                noLoop();
+            } else {
+                resetBall();
             }
         }
 
+        // Ball passed the bottom edge
         if(ballY + ballSize / 2 >= 800){
             scores[1]++;
-            for(int i = 0; i < scores.length; i++){
-                if(scores[i] >= 3){
-                    fill(255, 0, 0);
-                    textSize(40);
-                    text(playerNames[i] + " WINS", width / 2 - 70, height - 700);
-                    noLoop();
-                }
+            if(scores[1] == 3){
+                fill(255, 0, 0);
+                textSize(40);
+                text("RED WINS", width / 2 - 70, height - 700);
+                noLoop();
+            } else {
+                resetBall();
             }
         }
         
-        if(ballX + ballSize / 2 <= topBarX + barWidth 
-        && ballX - ballSize / 2 >= topBarX 
-        && ballY - ballSize / 2 >= 100 + barHeight 
-        && ballY + ballSize / 2 <= 100 + barHeight + ballSize
+        // Check if ball hits the top paddle
+        if(ballX + ballSize / 2 <= topBarX + barWidth           // Left of the right edge
+        && ballX - ballSize / 2 >= topBarX                      // Right of the left edge
+        && ballY - ballSize / 2 >= 100 + barHeight              // Below the bottom edge
+        && ballY + ballSize / 2 <= 100 + barHeight + ballSize   // Above the bottom limit
         ){
-            // ballY = 100 + barHeight + ballSize / 2;
             ballSpeedY *= -1;
         }
 
-        if(ballX + ballSize / 2 <= bottomBarX + barWidth 
-        && ballX - ballSize / 2 >= bottomBarX 
-        && ballY - ballSize / 2 >= 700 - ballSize 
-        && ballY + ballSize / 2 <= 700 
+        // Check if ball hits the bottom paddle
+        if(ballX + ballSize / 2 <= bottomBarX + barWidth        // Left of the right edge
+        && ballX - ballSize / 2 >= bottomBarX                   // Right of the left edge
+        && ballY - ballSize / 2 >= 700 - ballSize               // Below the top limit
+        && ballY + ballSize / 2 <= 700                          // Above the bottom edge
         ){
-            // ballY = 700 - ballSize / 2;
             ballSpeedY *= -1;
         }
 
@@ -132,6 +138,15 @@ public class Sketch extends PApplet {
         drawScores();
     }
 
+    // Reset the ball back to the center of the screen after a point is scored
+    private void resetBall(){
+        ballX = 400;
+        ballY = 400;
+        ballSpeedX = 5;
+        ballSpeedY = 5;
+    }
+
+    // Draws both players scores on the screen
     private void drawScores(){
         textSize(30);
 
@@ -139,16 +154,18 @@ public class Sketch extends PApplet {
         fill(0, 0, 255);
         text("Blue: " + scores[0], 10, 500);
 
-        // Red player score om the top half
+        // Red player score on the top half
         fill(255, 0, 0);
         text("Red: " + scores[1], 10, 300);
     }
 
+    // Draws the ball as a white circle at its current position
     private void drawBall(){
         fill(255);
         circle(ballX, ballY, ballSize);
     }
 
+    // Draws a dotted line across the middle of the screen to divide the two sides
     private void drawDottedLine(){
         int i = 0;
         int j = 0;
@@ -160,6 +177,7 @@ public class Sketch extends PApplet {
         }
     }
 
+    // Sets the matching boolean to true so the paddle moves in draw()
     public void keyPressed(){
         if (keyCode == LEFT) {
             user1PressedLeft = true;
@@ -172,6 +190,7 @@ public class Sketch extends PApplet {
         }
     }
 
+    // Sets the matching boolean to false so the paddle stops moving
     public void keyReleased(){
         if (keyCode == LEFT) {
             user1PressedLeft = false;
@@ -184,11 +203,19 @@ public class Sketch extends PApplet {
         }
     }
 
+    /**
+     * Draws the blue paddle at the bottom of the screen
+     * @param x the current X position of the paddle
+     */
     private void drawBottomBar(int x){
         fill(0, 0, 255);
         rect(x, 700, 150, 20, 10);
     }
 
+    /**
+     * Draws the red paddle at the top of the screen
+     * @param x the current X position of the paddle
+     */
     private void drawTopBar(int x) {
         fill(255, 0, 0);
         rect(x, 100, 150, 20, 10);
