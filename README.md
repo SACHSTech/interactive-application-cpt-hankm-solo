@@ -1,19 +1,32 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/wPuP5asc)
 # ICS3U CPT – Interactive Processing Project
 
-This repository contains your ICS3U Culminating Performance Task (CPT).
+## Screenshot
+![Game Screenshot](file:///Users/apple/Downloads/Pong%20Game%20Screenshot.jpg)
 
-### Start here:
-Please read the full project instructions in **[INSTRUCTIONS.md](INSTRUCTIONS.md)**.
+## Description
+A two player pong game built in Processing. Both players control a paddle and try to get the ball past the opponent's side. The first player to score 3 points wins the match. 
+The current score for both players is displayed on screen at all times.
 
-Assessment criteria for this project are described in **[ASSESSMENT.md](ASSESSMENT.md)**.
+## How to play
 
-Once you are ready to submit, replace the contents of this README.md file with:
+**Player 1 -- Blue (bottom paddle)**
+- Press 'LEFT' arrow to move left
+- Press 'RIGHT' arrow to move right
 
-- a screenshot of your program in action
-- a brief description of your program
-- how the user interacts with it
-- any known limitations or incomplete features
-- an attribution section for any external assets used
+**Player 2 -- Red (top paddle)**
+- Press 'A' to move left
+- Press 'D' to move right
 
-This README will be assessed as part of the project professionalism mark.
+A Point is scored when the ball passes the opponent's edge. After each point the ball resets to the center. The first player to reach 3 points wins.
+
+## Known Limitations
+- The ball always starts moving at the same speed and does not get faster over time
+- There is no way to restart the game after someone wins without re-running the program
+- Both paddles are the same size and speed throughout the game
+- It does not have a on-screen playing instruction
+- Each time when the game run or reset the ball always go to the bottom right corner first
+
+## Attributions
+No external assets were used in this project.
+
